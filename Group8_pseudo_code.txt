@@ -1,0 +1,139 @@
+CLIENT;
+
+/*Start:Show the Menu for login,register and exit
+option->takes user choice*/
+STEP 1: 
+start
+{	print(select an option:
+		1. register
+		2. login
+		3. exit)
+}
+STEP 2:
+switch(option){
+case 1: Login : /*It takes Existing valid username and password as inputs
+		otherwise pop ups error*/
+	Login{
+		print("welcome to login")
+		print("enter user name : ")
+		scan(user_name)
+		Read_File(Users.txt)
+		if( user_name != exists)
+		{
+		print("Opps! user not exist. Please enter a valid username")
+		Repeat STEP 1
+		}
+		else{
+		print("enter password : ")
+		scan(pass_word)
+		Read_File(Users.txt)
+		If(user_name & pass_word != exists)
+		{	
+		print("Sorry, Enter a valid Password")
+		}
+		else{
+		print("login in Successfully")
+		continue;}
+	    }
+			
+
+case 2: Register: /*It takes username and password for new users*/
+
+	Register{
+		print("enter user name : ")
+		scan(user_name)
+		if( user_name == exists)
+		{
+		print("user is already registered
+			Try again with different user name")
+		Repeat STEP 1
+		}
+		else{	print("enter password to register : ")
+		scan(pass_word)
+		Write_to_file(user_name, pass_word);
+		}
+
+	
+
+case 3: Exit:/*Terminate Program......*/
+	
+	Exit{
+		print("Thank you for choosing us!
+			Have a nice day........!!")
+	    }
+}
+----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
+
+Client:/*Connection forms with server using Server's port Address.
+If connection fails,print error message "Connection failed."*/
+
+connect
+
+
+Show menu
+ 1.Upload file
+ 2.Download file
+ 3.Delete file
+ 4.Display 
+ 5.Access control
+
+option-> Takes user choice
+
+switch(option)
+{
+case 1: upload()
+{
+	send filename to server
+	file.is_open():
+	If true, file transfer continue to server
+	else print error message "File cannot be open."
+}
+
+case 2: download()
+{
+	send filename to server.
+	If file doesn't exist, print "File not found!."
+	else file transfers from server to client.
+}
+
+case 3: delete()
+{
+	send filename to server.
+	If file doesn't exist, print "File not found!"
+	else print "File deletion Succesful".
+}
+
+case 4: display():list the file names of particular user
+
+case 5: Access_Control()
+{
+	changes file acess from public to private and viceversa.
+}
+}
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Server:
+
+Server links with Database
+(Database contains all file names,access info and username).
+
+upload()
+{
+create a file with name received from user
+Then, Add received file content into file.
+}
+
+download()
+{
+if requested file is exists,transfer the file to user
+else print "File not found!"
+}
+
+delete()
+{
+if requested file name is exists, delete filename from database.
+else print "File not found!"
+} 
