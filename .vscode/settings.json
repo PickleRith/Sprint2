@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "_read.C": "cpp",
+        "_write.C": "cpp",
+        "server_temp_ref.C": "cpp",
+        "main.C": "cpp",
+        "init_server.c": "cpp",
+        "server.C": "cpp",
+        "functions.C": "cpp",
+        "iostream": "cpp"
+    }
+}

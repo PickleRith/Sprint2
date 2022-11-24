@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "classes.h"
+#include "../../include/classes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -62,47 +62,6 @@ void Utilities::authenticationMenu(Authenticate &auth){
 }
 
 
-// const char *get_filename_ext(const char *filename) {
-//     const char *dot = strrchr(filename, '.');
-//     if(!dot || dot == filename) return "";
-//     return dot + 1;
-// }
-
-// void send_file(FILE *fp, int sockfd, const char *ext){
-//   int n;
-//   char data[SIZE] = {0};
-//  send(sockfd, ext, sizeof(ext), 0);
-//   while(fgets(data, SIZE, fp) != NULL) {
-//     if (send(sockfd, data, sizeof(data), 0) == -1) {
-//       perror("Error in sending file.");
-//       exit(1);
-//     }
-//     bzero(data, SIZE);
-//   }
-// }
-
-// void write_file(int sockfd){
-//   int n;
-//   FILE *fp;
-//   char filename[] = "received.";
-//   char buffer[SIZE];
-  
-//   n = recv(sockfd, buffer, SIZE, 0);
-//   strcat(filename, buffer);
-//   printf("%s\n", filename);
-//   fp = fopen(filename, "w");
-//   while (1) {
-//     n = recv(sockfd, buffer, SIZE, 0);
-//     if (n <= 0){
-//       break;
-//       return;
-//     }
-//     fprintf(fp, "%s", buffer);
-//     bzero(buffer, SIZE);
-//   }
-//   return;
-// }
-
 Client::Client(){
 	int clientSocket , serverSocket , receiveMsgSize;
 	clientSocket = socket(AF_INET , SOCK_STREAM , 0);
@@ -127,39 +86,7 @@ Client::Client(){
 
 	this->clientSocket = clientSocket;
 
-	// while(true)
-	// {
-	// 	string s;
-	// 	char input[SIZE];
-	// 	cout << "Client : ";
-	// 	getline(cin , s);
-	// 	int n = s.size();
-	// 	for(int i = 0 ; i < n ; i++)
-	// 	{
-	// 		input[i] = s[i];
-	// 	}
-	// 	input[n] = '\0';
-	// 	send(clientSocket , input , strlen(input)+1 , 0);
-	// 	char receiveMessage[SIZE];
-	// 	int rMsgSize = recv(clientSocket , receiveMessage , SIZE , 0);
-	// 	if(rMsgSize < 0)
-	// 	{
-	// 		cout << "Packet recieve failed." << endl;
-	// 		// return 0;
-	// 	}
-	// 	else if(rMsgSize == 0)
-	// 	{
-	// 		cout << "Server is off." << endl;
-	// 		// return 0;
-	// 	}
-
-	// 	if(receiveMessage[0] == 'b' && receiveMessage[1] == 'y' && receiveMessage[2] == 'e')
-	// 	{
-	// 		cout << "\nConnection ended... take care bye bye... " ;
-	// 		break;
-	// 	}
-	// 	cout << "received server : " << receiveMessage <<endl;
-	// }
+	
 }
 
 
@@ -215,7 +142,7 @@ bool Utilities::loginMenu(Authenticate &auth){
 		cout<<"Enter password: ";
 		cin>>_password;
 		
-		ifstream fin("users.txt",ios::in);
+		ifstream fin("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt",ios::in);
 		string userType;
 		while(fin>>username>>password>>userType){
 			// cout<<password<<" "<<_password<<endl;
@@ -279,7 +206,7 @@ void splitString(string str, string delimiter = " ")
 }
 
 bool Authenticate::isUserExist(string username){
-	ifstream openFile2("users.txt");
+	ifstream openFile2("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt");
 	string line;
 	while(!openFile2.eof()){
 		getline(openFile2, line);
@@ -299,7 +226,7 @@ bool Authenticate::isUserExist(string username){
 
 bool Authenticate:: Register(User *urs){
 	
-	ofstream writeFile("users.txt", ios::app);
+	ofstream writeFile("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt", ios::app);
 	if(!writeFile) return false;
 	writeFile<<urs->userName<<" "<<urs->password<<" "<<urs->userType<<"\n";
 	writeFile.close();

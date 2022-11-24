@@ -1,17 +1,16 @@
 #include <bits/stdc++.h>
-#include "classes.h"
+#include "../../include/classes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <arpa/inet.h>
 #include <string.h>
-// #include <glob.h>
 #define LOG_LEVEL DEBUG
-#include "logger/Logger.h"
-#include "operations/_write.C"
-#include "operations/_read.C"
-#include "server/init_server.C"
+#include "../../include/Logger.h"
+#include "../operations/_write.C"
+#include "../operations/_read.C"
+#include "../server/init_server.C"
 #include <dirent.h>
 #include <sys/types.h>
 
@@ -71,12 +70,14 @@ Login_menu:
 	if (auth.loggedIn)
 	{
 		// user authenticated
-		cout << auth.activUser;
+		// cout << auth.activUser;
 
 		// invoke the server
-		start_server();
+		// start_server();
+		// sleep(3);
+
+
 		// client creation
-		sleep(10);
 		Client c;
 		int idx=0;
 		char client_name[10]; 
