@@ -150,7 +150,7 @@ Login_menu:
 				break;
 			case SHOW:
 				// show files
-				list_files("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/server");
+				list_files("../src/server");
 				break;
 				
 			case DELETE:
