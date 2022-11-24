@@ -142,7 +142,7 @@ bool Utilities::loginMenu(Authenticate &auth){
 		cout<<"Enter password: ";
 		cin>>_password;
 		
-		ifstream fin("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt",ios::in);
+		ifstream fin("../src/data/users.txt",ios::in);
 		string userType;
 		while(fin>>username>>password>>userType){
 			// cout<<password<<" "<<_password<<endl;
@@ -206,7 +206,7 @@ void splitString(string str, string delimiter = " ")
 }
 
 bool Authenticate::isUserExist(string username){
-	ifstream openFile2("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt");
+	ifstream openFile2("../src/data/users.txt");
 	string line;
 	while(!openFile2.eof()){
 		getline(openFile2, line);
@@ -226,7 +226,7 @@ bool Authenticate::isUserExist(string username){
 
 bool Authenticate:: Register(User *urs){
 	
-	ofstream writeFile("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt", ios::app);
+	ofstream writeFile("../src/data/users.txt", ios::app);
 	if(!writeFile) return false;
 	writeFile<<urs->userName<<" "<<urs->password<<" "<<urs->userType<<"\n";
 	writeFile.close();

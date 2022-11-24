@@ -15,7 +15,7 @@ void write_file(int sockfd){
   n = recv(sockfd, buffer, SIZE, 0);
   //strcat(filename, buffer);
   printf("%s\n", buffer);
-  sleep(5);
+  // sleep(5);
   fp = fopen(buffer, "w");
   bzero(buffer, SIZE);
 

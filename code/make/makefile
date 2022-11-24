@@ -8,11 +8,11 @@ HDR = ../include
 
 OBJS = main.o functions.o
 ${EXEC}: ${OBJS}
-	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJS}
+	${CXX} ${CXXFLAGS} -w -o ${EXEC} ${OBJS}
 functions.o: $(SRC)/client/functions.C $(HDR)/classes.h
 	${CXX} ${CXXFLAGS} -c $(SRC)/client/functions.C
-main.o: $(SRC)/client/main.C $(HDR)/classes.h $(HDR)/Logger.h
-	${CXX} ${CXXFLAGS} -c $(SRC)/client/main.C
+main.o: $(SRC)/client/main.C $(HDR)/classes.h $(HDR)/logger.h
+	${CXX} ${CXXFLAGS} -w -c $(SRC)/client/main.C
 clean: 
 	rm *.o output
 

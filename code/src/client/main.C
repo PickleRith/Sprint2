@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #define LOG_LEVEL DEBUG
-#include "../../include/Logger.h"
+#include "../../include/logger.h"
 #include "../operations/_write.C"
 #include "../operations/_read.C"
 #include "../server/init_server.C"
@@ -36,7 +36,8 @@ void list_files(const char* path=".") {
 
 int main()
 {
-	debug("debug log");
+	// debug("debug log");
+	LOG_DEBUG("Hello, Welcome :) ");
 	cout << "Hello, Welcome :) " << endl;
 	// info("informational log");
 	// notice("notice log");
@@ -74,7 +75,7 @@ Login_menu:
 
 		// invoke the server
 		// start_server();
-		// sleep(3);
+		sleep(1);
 
 
 		// client creation
@@ -149,7 +150,7 @@ Login_menu:
 				break;
 			case SHOW:
 				// show files
-				list_files();
+				list_files("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/server");
 				break;
 				
 			case DELETE:
