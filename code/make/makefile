@@ -9,4 +9,4 @@ functions.o: functions.C classes.h
 main.o: main.C classes.h logger/Logger.h
 	${CXX} ${CXXFLAGS} -c main.C
 clean: 
-	rm *.o *.out output
+	rm *.o output
