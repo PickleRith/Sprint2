@@ -1,4 +1,0 @@
-09:23:47 |   [DEBUG]	| main	| (main.C:line: )	| debug log
-09:30:22 |   [DEBUG]	| main	| (main.C:line: )	| debug log
-09:41:34 |   [DEBUG]	| main	| (main.C:line: )	| debug log
-09:53:44 |   [DEBUG]	| main	| (main.C:line: )	| debug log
