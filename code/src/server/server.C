@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "../operations/_write.C"
 #include "../operations/_read.C"
-// #include <direct.h>
+#include "../operations/_show_files.C"
 
 using namespace std;
 
@@ -14,6 +14,7 @@ using namespace std;
 
 #define PORT 5200
 
+//driver code for server
 int main()
 {
 	int serverSocketHandler = socket(AF_INET , SOCK_STREAM , 0);
@@ -21,6 +22,7 @@ int main()
 	if(serverSocketHandler < 0)
         {
        // socket methode return -1 if the creation was not successful
+		//LOG_ERROR("Socket creation has failed");
 		cout << "Socket creation has failed.";
 		return 0;
 	    }
@@ -32,6 +34,7 @@ int main()
 	int bindStatus = bind(serverSocketHandler , (struct sockaddr*) & serverAddr , sizeof(serverAddr));
 	if(bindStatus < 0)
     {
+		//LOG_ERROR("Socket binding has failed");
 		cout << "Socket binding has failed" << endl;
 		return 0;
 	}
@@ -66,7 +69,7 @@ int main()
 	cout<<"User "<< buffer <<" is connected."<<endl;
 
 
-	
+	//while statement
 	while(true){
 		char buffer[SIZE];
 		int response_code = recv(connection, buffer, SIZE, 0);
@@ -76,19 +79,19 @@ int main()
 		}
 		else if(strcmp(buffer, "upload")==0){
 			cout<<"uploading....."<<endl;
-
 			write_file(connection);
+			system("make display_file");
 			cout<<"File Uploaded to Server\n";
 			break;
 		}
 		else if(strcmp(buffer, "download")==0){
-			//cout<<buffer<<endl;
-			// // sleep(10);
+		
 				FILE *fp;
 				string fname;
 			 	response_code = recv(connection, buffer, SIZE, 0);
 			 	if(access(buffer,F_OK)==0){
 			 		send(connection, "File is downloading", 20, 0);
+			 		//LOG_INFO("Downloading");
 			 		cout<<"Downloading ";
 			 		const char *filename = buffer;
 					if(response_code<=0){
@@ -101,20 +104,37 @@ int main()
 			 		if (fp == NULL)
 			 		{
 			 			perror("Error in reading file.");
-			 			exit(1);
+			 			break;
 			 		}
-			 	
-			 	// char command[] = "upload";
-			 	//send(connection, command, sizeof(command) + 1, 0);
 				
 			 		send_file(fp, connection, filename,fname.length());
+			 		cout<<"File transfer completed!"<<endl;
+			 		system("make display_file");
 					fclose(fp);
 				}
 				else
+				{
 					send(connection, "File does not exits!", 20, 0);
-				//sleep(100);
+					cout<<"FIle does not exist";
+					exit(0);
+				}
 			break;
 			
+		}
+		else if (strcmp(buffer, "show_files") == 0)
+		{
+			cout << buffer << endl;
+			DIR *dr;
+			struct dirent *en;
+			dr = opendir("."); // open all directory
+			if (dr)
+			{
+				while ((en = readdir(dr)) != NULL)
+				{
+					send(connection, en->d_name, sizeof(en->d_name), 0);
+				}
+				closedir(dr); // close all directory
+			}
 		}
 		else if(strcmp(buffer, "delete")==0){
 				response_code = recv(connection, buffer, SIZE, 0);
@@ -126,35 +146,9 @@ int main()
 				send(connection, "File does not exits!", 20, 0);
 				cout<<"File does not exit\n";}
 			}
+			system("make display_file");
 	}
-	// while(true){
-    //         // infinite loop for chatting
-	// 	int rMsgSize;
 
-	// 	if((rMsgSize  = recv(connection , buff , MAX , 0)) > 0){
-	// 		cout << "received client : " << buff << endl;
-
-	// 		if(buff[0] == 'b' && buff[1] == 'y' && buff[2] == 'e'){
-	// 			cout << "Server : Bye bro" << endl;
-	// 			cout << "\nConnection ended... take care bye bye...\n" ;
-	// 			send(connection , buff , strlen(buff)+1 , 0);
-	// 			break;
-	// 		}
-
-	// 		cout << "Server : ";
-	// 		char input[MAX];
-	// 		string s;
-	// 		getline(cin , s);
-	// 		int n = s.size();
-	// 		for(int i = 0 ; i < n ; i++){
-	// 			input[i] = s[i];
-	// 		}
-
-	// 	input[n] = '\0';
-
-	// 	send(connection , input , strlen(input)+1 , 0);
-	// 	}
-	// }
 	sleep(20);
 	close(serverSocketHandler);
 	return 0;
