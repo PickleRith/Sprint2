@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "../../include/classes.h"
+#include "classes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -7,19 +7,18 @@
 #include <arpa/inet.h>
 #include <string.h>
 #define LOG_LEVEL DEBUG
-#include "../../include/Logger.h"
-#include "../operations/_write.C"
-#include "../operations/_read.C"
-#include "../server/init_server.C"
+#include "operations/_write.C"
+#include "operations/_read.C"
+#include "server/init_server.C"
 #include <dirent.h>
 #include <sys/types.h>
-
+#include "logger/Logger_file.h"
 
 #define SIZE 1024
 #define FILEN_SIZE 20
 using namespace std;
 
-
+//list files
 void list_files(const char* path=".") {
    DIR *dr;
    struct dirent *en;
@@ -33,16 +32,15 @@ void list_files(const char* path=".") {
 }
 
 
-
+//driver code
 int main()
 {
-	debug("debug log");
+	LOG_DEBUG("debug log");
 	cout << "Hello, Welcome :) " << endl;
-	// info("informational log");
-	// notice("notice log");
 	Authenticate auth;
 	Utilities u;
 
+//create login menu
 Login_menu:
 	u.welcomeMenu();
 	cout << "\n\n";
@@ -63,21 +61,19 @@ Login_menu:
 	case 3:
 		u.Exit();
 	default:
-		cout << "Invalid choice,Please try Again!\n";
+		LOG_ERROR("Invalid choice,Please try Again!");
 		break;
 	}
 	cout<<endl;
 	if (auth.loggedIn)
 	{
+		LOG_INFO("LOGIN SUCCESSFUL");
 		// user authenticated
-		// cout << auth.activUser;
-
+		cout << auth.activUser;
 		// invoke the server
-		// start_server();
-		// sleep(3);
-
-
+		start_server();
 		// client creation
+		sleep(10);
 		Client c;
 		int idx=0;
 		char client_name[10]; 
@@ -86,7 +82,7 @@ Login_menu:
 		}
 		client_name[idx]='\0';
 		send(c.clientSocket, client_name, sizeof(client_name) + 1, 0);
-		do
+		do 
 		{
 			cout << "\n\t\t\t1. Upload file\n\t\t\t2. Download file\n\t\t\t3. Show files\n\t\t\t4. Delete\n\t\t\t5. Exit\n";
 			enum Operations { UPLOAD = 1, DOWNLOAD =2 , SHOW = 3, DELETE = 4, EXIT =5 };
@@ -96,7 +92,7 @@ Login_menu:
 			switch (option)
 			{
 			case UPLOAD:
-			{ // Upload
+			{ // Uploading feature for files
 				FILE *fp;
 				char command[] = "upload";
 				send(c.clientSocket, command, sizeof(command) + 1, 0);
@@ -106,7 +102,6 @@ Login_menu:
 				cin>>fname;
 				strcpy(filename,fname.c_str());
 				if(access(filename,F_OK)==0){
-				//cout<<(sizeof(filename)/sizeof(filename[0]))-1<<endl;
 				fp = fopen(filename, "r");
 				if (fp == NULL)
 				{
@@ -115,15 +110,15 @@ Login_menu:
 				}
 				send_file(fp, c.clientSocket, filename,fname.length());
 				fclose(fp);
-				cout << "File uploading Completed!\n";
+				LOG_INFO("File uploading Completed!");
 				}
 				else
-					cout<<"File does not exists!\nPlease try Again.\n";
+					LOG_ERROR("File does not exists!,Please try Again.");
 			}
 
 			break;
 			case DOWNLOAD:
-				// Download
+				// Downloading feature of files
 				{
 
 				FILE *fp;
@@ -141,17 +136,21 @@ Login_menu:
 					cout << "Downloading ";
 
 					write_file(c.clientSocket);
-					cout << "File Downloading Completed!\n";
+					LOG_INFO("File Downloading Completed!");
 					}
 					else
-						printf("%s\n",buffer);
+						LOG_ERROR(buffer);
+				cout<<endl;
 				}
 				break;
 			case SHOW:
-				// show files
-				list_files();
+				{// show files
+				cout<<"List of files at Server side:\n\n";
+				system("cd server && ./display_file && cd ..");
+				}
 				break;
 				
+			//deletion of files
 			case DELETE:
 			{
 				char command[] = "delete";
@@ -162,7 +161,7 @@ Login_menu:
         			send(c.clientSocket, buf, sizeof(buf) + 1, 0);
         			int response_code = recv(c.clientSocket, buf, SIZE, 0);
         			printf("%s",buf);
-        			//int res=remove(buf);
+        			cout<<endl;
         			break;
         		}
 			case EXIT:
@@ -171,15 +170,15 @@ Login_menu:
 				break;
 			}
 			default:
-				cout << "Invalid choice,Please try Again!\n";
+				LOG_ERROR("Invalid choice,Please try Again!");
 				break;
 			}
-		} while (true);
+		} while (false);
 	}
 	else
 	{
 		// user is logged logged out or not authenticated
-		cout << "User is not logged in\n";
+		LOG_ERROR("User is not logged in");
 		goto Login_menu;
 	}
 

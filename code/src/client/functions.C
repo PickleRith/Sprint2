@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
-#include "../../include/classes.h"
+#include "classes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <arpa/inet.h>
-/*#include "logger.h"*/
 #define SIZE 1024
 #define PORT 5200
 using namespace std;
@@ -61,14 +60,13 @@ void Utilities::authenticationMenu(Authenticate &auth){
 	}while(option==1);
 }
 
-
 Client::Client(){
 	int clientSocket , serverSocket , receiveMsgSize;
 	clientSocket = socket(AF_INET , SOCK_STREAM , 0);
 	if(clientSocket < 0)
         {
 		cout << "Creation of client socket failed" << endl;
-		// return 0;
+		
         }
 	struct sockaddr_in serverAddr , clientAddr;
 	serverAddr.sin_family = AF_INET;
@@ -77,7 +75,7 @@ Client::Client(){
 	if(connect(clientSocket ,  (struct sockaddr*) & serverAddr , sizeof(serverAddr)) < 0)
 	{
 		cout << "Connection Error..." << endl;
-		// return 0;
+		
 	}
 	else
 	{
@@ -86,7 +84,6 @@ Client::Client(){
 
 	this->clientSocket = clientSocket;
 
-	
 }
 
 
@@ -142,10 +139,9 @@ bool Utilities::loginMenu(Authenticate &auth){
 		cout<<"Enter password: ";
 		cin>>_password;
 		
-		ifstream fin("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt",ios::in);
+		ifstream fin("users.txt",ios::in);
 		string userType;
 		while(fin>>username>>password>>userType){
-			// cout<<password<<" "<<_password<<endl;
 			if(_password==password and _username==username){
 				validPassword=true;
 			}
@@ -162,8 +158,6 @@ skip_password:
 		auth.activUser = _username;
 		auth.setLoggedIn();
 		//User authentcated
-		// clientOperationsMenu();
-		// auth.carBooking();
 		return true;
 	}
 	else{
@@ -206,7 +200,7 @@ void splitString(string str, string delimiter = " ")
 }
 
 bool Authenticate::isUserExist(string username){
-	ifstream openFile2("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt");
+	ifstream openFile2("users.txt");
 	string line;
 	while(!openFile2.eof()){
 		getline(openFile2, line);
@@ -226,7 +220,7 @@ bool Authenticate::isUserExist(string username){
 
 bool Authenticate:: Register(User *urs){
 	
-	ofstream writeFile("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/data/users.txt", ios::app);
+	ofstream writeFile("users.txt", ios::app);
 	if(!writeFile) return false;
 	writeFile<<urs->userName<<" "<<urs->password<<" "<<urs->userType<<"\n";
 	writeFile.close();
