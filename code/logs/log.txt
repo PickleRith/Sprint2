@@ -1,8 +1,5 @@
 15:19:58 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 
 15:26:43 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 
 15:32:04 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 
-16:38:10 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 
-07:47:35 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| User is logged in.
-07:47:28 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 
-07:54:48 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| User exiting...
-07:54:39 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 
+16:05:09 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 
+16:09:20 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 
