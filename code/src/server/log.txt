@@ -1,1 +1,0 @@
-15:19:58 |   [DEBUG]	| main	| (../src/client/main.C:line: )	| Hello, Welcome :) 

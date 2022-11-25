@@ -71,10 +71,7 @@ Login_menu:
 	if (auth.loggedIn)
 	{
 		// user authenticated
-		// cout << auth.activUser;
-
-		// invoke the server
-		// start_server();
+		LOG_DEBUG("User logged in.");
 		sleep(1);
 
 
@@ -100,6 +97,7 @@ Login_menu:
 			{ // Upload
 				FILE *fp;
 				char command[] = "upload";
+				LOG_DEBUG("User uploading...");
 				send(c.clientSocket, command, sizeof(command) + 1, 0);
 				char filename[FILEN_SIZE];
 				string fname;
@@ -129,6 +127,7 @@ Login_menu:
 
 				FILE *fp;
 				char command[] = "download";
+				LOG_DEBUG("User downloading...");
 				send(c.clientSocket, command, sizeof(command) + 1, 0);
 				sleep(1);
 					char buffer[SIZE];
@@ -150,12 +149,13 @@ Login_menu:
 				break;
 			case SHOW:
 				// show files
-				list_files("/home/rjbabu1309/RajaBabu/project/Sprint2/code/src/server");
+				list_files("../src/server");
 				break;
 				
 			case DELETE:
 			{
 				char command[] = "delete";
+				LOG_DEBUG("User deleting...");
 				send(c.clientSocket, command, sizeof(command) + 1, 0);
 				cout<<"Enter file name: ";
         			char buf[SIZE];
@@ -181,6 +181,8 @@ Login_menu:
 	{
 		// user is logged logged out or not authenticated
 		cout << "User is not logged in\n";
+
+		//if not authenticated goto the login menu
 		goto Login_menu;
 	}
 

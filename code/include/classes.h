@@ -1,3 +1,6 @@
+#ifndef CLASSES_HEADERS
+#define CLASSES_HEADERS
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -6,6 +9,7 @@ class User{
 	string userName;
 	string password;
 	int userType;
+	//friend class Authenticate
 	friend class Authenticate;
 public:
 	User(string userName, string password, int userType){
@@ -57,3 +61,6 @@ class Client{
 	int clientSocket;
 	Client();
 };
+
+
+#endif
