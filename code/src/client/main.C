@@ -3,9 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
 #include <arpa/inet.h>
-#include <string.h>
 #define LOG_LEVEL DEBUG
 #include "../../include/logger.h"
 #include "../operations/_write.C"
@@ -45,7 +43,7 @@ int main()
 
 Login_menu:
 
-	//welcome menu
+	// welcome menu
 	u.welcomeMenu();
 
 	cout << "\n\n";
@@ -63,7 +61,8 @@ Login_menu:
 	case 2: // Register
 		u.authenticationMenu(auth);
 		break;
-	case 3: //Exiting 
+	case 3: // Exiting
+		LOG_DEBUG("User exiting...");
 		u.Exit();
 	default:
 		cout << "Invalid choice,Please try Again!\n";
@@ -107,7 +106,7 @@ Login_menu:
 			switch (option)
 			{
 			case UPLOAD:
-			{ 
+			{
 				// Upload
 				FILE *fp;
 				char command[] = "upload";
@@ -137,7 +136,6 @@ Login_menu:
 
 			break;
 			case DOWNLOAD:
-				
 				// Download
 				{
 
@@ -150,10 +148,10 @@ Login_menu:
 					printf("Enter filename: ");
 
 					scanf("%123s", filename);
-					send(c.clientSocket, filename, sizeof(filename) + 1, 0);	//sending file name to download
-					
-					//receiving the file
-					int response_code = recv(c.clientSocket, buffer, SIZE, 0);	
+					send(c.clientSocket, filename, sizeof(filename) + 1, 0); // sending file name to download
+
+					// receiving the file
+					int response_code = recv(c.clientSocket, buffer, SIZE, 0);
 					if (strcmp(buffer, "File is downloading") == 0)
 					{
 						cout << "Downloading ";
@@ -175,7 +173,7 @@ Login_menu:
 				// Deleting the file
 				char command[] = "delete";
 				send(c.clientSocket, command, sizeof(command) + 1, 0);
-				cout << "Enter file name: ";	//asking user which file he wants to delete
+				cout << "Enter file name: "; // asking user which file he wants to delete
 				char buf[SIZE];
 				scanf("%s", buf);
 				send(c.clientSocket, buf, sizeof(buf) + 1, 0);
@@ -188,7 +186,7 @@ Login_menu:
 			}
 			case EXIT:
 			{
-				//Exiting the user
+				// Exiting the user
 				u.Exit();
 				break;
 			}
@@ -203,7 +201,7 @@ Login_menu:
 		// user is logged out or not authenticated
 		cout << "User is not logged in\n";
 
-		//going back to the login menu
+		// going back to the login menu
 		goto Login_menu;
 	}
 
